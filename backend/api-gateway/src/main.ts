@@ -1,1 +1,13 @@
-console.log('api gateway placeholder');
+import { NestFactory }      from '@nestjs/core';
+import { AppModule }        from './app.module';
+import { ValidationPipe }   from '@nestjs/common';
+import { graphqlUploadExpress } from 'graphql-upload';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  app.enableCors();
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.use(graphqlUploadExpress({ maxFileSize: 5_000_000, maxFiles: 3 }));
+  await app.listen(process.env.PORT ?? 4000);
+}
+bootstrap();
