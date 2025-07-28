@@ -3,8 +3,11 @@ syntax = "proto3";
 package gameplay;
 
 service Gameplay {
-  rpc Tick(TickRequest) returns (TickResponse) {}
+  rpc StreamEvents(SubscribeRequest) returns (stream GameEvent);
+  rpc PostCommand(PlayerCommand) returns (CommandAck);
 }
 
-message TickRequest {}
-message TickResponse {}
+message SubscribeRequest { string player_id = 1; }
+message PlayerCommand     { string player_id = 1; string payload = 2; }
+message CommandAck        { string id = 1; bool accepted = 2; }
+message GameEvent         { string topic = 1; bytes data = 2; int64 ts = 3; }
