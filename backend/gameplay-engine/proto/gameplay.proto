@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package gameplay;
+
+service Gameplay {
+  rpc Tick(TickRequest) returns (TickResponse) {}
+}
+
+message TickRequest {}
+message TickResponse {}
