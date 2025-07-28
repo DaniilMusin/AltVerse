@@ -1,0 +1,40 @@
+version: "3"
+
+tasks:
+  bootstrap:
+    desc: "Установка зависимостей Go + Node + Python"
+    cmds:
+      - go work sync
+      - pnpm install --frozen-lockfile
+      - pip install -r backend/services/anti-cheat/requirements.txt
+
+  lint:
+    desc: "Общий линт-раннер"
+    cmds:
+      - golangci-lint run ./...
+      - pnpm eslint "backend/**/*.ts"
+      - black --check backend/services/anti-cheat
+
+  test:
+    desc: "Все юнит-тесты"
+    cmds:
+      - go test ./... -v
+      - pnpm jest --runInBand
+      - pytest backend/services/anti-cheat
+
+  build:
+    desc: "Локальная сборка всех Docker-образов"
+    cmds:
+      - docker compose build
+
+  dev:web:
+    dir: backend/frontend/web
+    cmds: [ "pnpm dev" ]
+
+  dev:gateway:
+    dir: backend/api-gateway
+    cmds: [ "pnpm start:dev" ]
+
+  dev:engine:
+    dir: backend/gameplay-engine
+    cmds: [ "go run ./cmd/engine" ]
