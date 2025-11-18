@@ -1,6 +1,6 @@
 package processor
 
-import "math"
+import "sync"
 
 var mu sync.Mutex
 var lastCap float64

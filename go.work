@@ -1,6 +1,6 @@
 go 1.23.0
 
 use (
-./backend/gameplay-engine
-./backend/services/analytics
+	./backend/gameplay-engine
+	./backend/services/analytics
 )
