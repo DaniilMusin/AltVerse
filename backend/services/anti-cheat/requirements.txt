@@ -1,1 +1,8 @@
 fastapi
+uvicorn
+pydantic
+joblib
+numpy
+redis
+pandas
+catboost
